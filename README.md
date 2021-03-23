@@ -1,24 +1,14 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Unnofficial Funko API
 
-Things you may want to cover:
+#### To Do
 
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+- [ ] Write some tests
+- [ ] Authentication
+- [ ] Search Feature
+- [ ] Pagination Feature
+- [ ] Ordering Feature
+- [ ] Write a Documentation
+- [ ] Add Data Serialization
+- [ ] Add Scheduled Daily Rake to Get Data From Funko's Site

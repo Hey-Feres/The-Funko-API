@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_03_23_212000) do
+ActiveRecord::Schema.define(version: 2021_03_24_175505) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -25,6 +25,20 @@ ActiveRecord::Schema.define(version: 2021_03_23_212000) do
     t.string "name"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "collections", force: :cascade do |t|
+    t.string "name"
+    t.integer "estimated_value_cents"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "collections_items", id: false, force: :cascade do |t|
+    t.bigint "collection_id", null: false
+    t.bigint "item_id", null: false
+    t.index ["collection_id"], name: "index_collections_items_on_collection_id"
+    t.index ["item_id"], name: "index_collections_items_on_item_id"
   end
 
   create_table "data_fetches", force: :cascade do |t|

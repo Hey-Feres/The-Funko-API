@@ -7,6 +7,7 @@ Rails.application.routes.draw do
       resources :licenses, only: %i[index show]
       resources :events, only: %i[index show]
       resources :categories, only: %i[index show]
+      resources :collections
       post      :search, to: 'searches#index'
     end
   end

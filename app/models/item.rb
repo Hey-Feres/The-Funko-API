@@ -18,6 +18,7 @@ class Item < ApplicationRecord
   belongs_to :brand, optional: true
   has_and_belongs_to_many :events
   has_and_belongs_to_many :features
+  has_and_belongs_to_many :collections, dependent: :destroy
 
   #
   # Validations

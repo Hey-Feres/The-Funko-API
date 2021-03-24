@@ -1,9 +1,21 @@
+# frozen_string_literal: true
+
+#
+# Item model handle the logic of funko's items
 class Item < ApplicationRecord
+  #
+  # Associations
+  #
+
   belongs_to :category, optional: true
   belongs_to :license, optional: true
   belongs_to :brand, optional: true
   has_and_belongs_to_many :events
   has_and_belongs_to_many :features
+
+  #
+  # Validations
+  #
 
   validates :title, :number, presence: true
 end

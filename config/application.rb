@@ -18,7 +18,7 @@ module TheFunkoApi
   class Application < Rails::Application
     config.load_defaults 6.0
 
-    config.autoload_paths += %W[#{config.root}/app/scrappers]
+    config.autoload_paths += %W[#{config.root}/app/services]
 
     config.api_only = true
   end

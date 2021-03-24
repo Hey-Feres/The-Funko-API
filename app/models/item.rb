@@ -4,6 +4,12 @@
 # Item model handle the logic of funko's items
 class Item < ApplicationRecord
   #
+  # Constants
+  #
+
+  SEARCHABLE_FIELDS = %w[number title form_factor features inner_case_count master_case_quantity status]
+
+  #
   # Associations
   #
 

@@ -19,6 +19,7 @@ module TheFunkoApi
     config.load_defaults 6.0
 
     config.autoload_paths += %W[#{config.root}/app/services]
+    config.autoload_paths += %W[#{config.root}/app/queries]
 
     config.api_only = true
   end

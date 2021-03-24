@@ -15,12 +15,12 @@ module Api
       def index
         @collections = Collection.all
 
-        render json: @collections
+        render json: @collections, include: %i[items]
       end
 
       # GET /collections/1
       def show
-        render json: @collection
+        render json: @collection, include: %i[items]
       end
 
       # POST /collections
@@ -28,7 +28,7 @@ module Api
         @collection = Collection.new(collection_params)
 
         if @collection.save
-          render json: @collection, status: :created, location: @collection
+          render json: @collection, include: %i[items], status: :created
         else
           render json: @collection.errors, status: :unprocessable_entity
         end
@@ -37,7 +37,7 @@ module Api
       # PATCH/PUT /collections/1
       def update
         if @collection.update(collection_params)
-          render json: @collection
+          render json: @collection, include: %i[items]
         else
           render json: @collection.errors, status: :unprocessable_entity
         end
@@ -56,7 +56,7 @@ module Api
 
         # Only allow a trusted parameter "white list" through.
         def collection_params
-          params.require(:collection).permit(:name)
+          params.require(:collection).permit(:name, items_ids: [], remove_items_ids: [])
         end
     end
   end

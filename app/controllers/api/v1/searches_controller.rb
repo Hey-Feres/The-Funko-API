@@ -34,7 +34,7 @@ module Api
         #
         # Filter the received params
         def filter_params
-          params.permit(:scope, search: [ [ :operator, :conjunctor, :key, :value, value: [] ] ])
+          params.permit(:scope, search: [ [ :operator, :conjunctor, :include, :key, :value, value: [] ] ])
         end
 
         #

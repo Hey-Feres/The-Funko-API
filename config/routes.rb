@@ -8,6 +8,7 @@ Rails.application.routes.draw do
       resources :events, only: %i[index show]
       resources :categories, only: %i[index show]
       resources :collections
+      resources :wish_lists
       post      :search, to: 'searches#index'
     end
   end

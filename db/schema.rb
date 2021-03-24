@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_03_24_175505) do
+ActiveRecord::Schema.define(version: 2021_03_24_185603) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -93,8 +93,22 @@ ActiveRecord::Schema.define(version: 2021_03_24_175505) do
     t.index ["license_id"], name: "index_items_on_license_id"
   end
 
+  create_table "items_wish_lists", id: false, force: :cascade do |t|
+    t.bigint "wish_list_id", null: false
+    t.bigint "item_id", null: false
+    t.index ["item_id"], name: "index_items_wish_lists_on_item_id"
+    t.index ["wish_list_id"], name: "index_items_wish_lists_on_wish_list_id"
+  end
+
   create_table "licenses", force: :cascade do |t|
     t.string "name"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "wish_lists", force: :cascade do |t|
+    t.string "name"
+    t.integer "estimated_value_cents"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end

@@ -5,6 +5,12 @@
 # Some licenses examples: ["Mortal Kombat", "Star Trek", "Marvel", "Naruto", "Disney Animation"]
 class License < ApplicationRecord
   #
+  # Constants
+  #
+
+  SEARCHABLE_FIELDS = %w[id name]
+
+  #
   # Associations
   #
 

@@ -104,6 +104,8 @@ class ApplicationQuery
     "#{param['conjunctor']} data.#{param['key']} <= '#{param['value']}' "
   end
 
+  #
+  # Return the associations of scope by type
   def scope_associations(assocation)
     return if assocation.blank?
 
@@ -121,6 +123,8 @@ class ApplicationQuery
     end
   end
 
+  #
+  # Check if the attribute that is been used to join table is valid association
   def valid_table_joinment?(param)
     return true if scope_associations(:belongs_to).include?(param) ||
                    scope_associations(:has_one).include?(param) ||
@@ -128,16 +132,30 @@ class ApplicationQuery
                    scope_associations(:has_and_belongs_to_many).include?(param)
   end
 
+  #
+  # Loop throught the parameters and add table's join statements to query's array
   def build_joinments
     @parameters.each do |param|
       return unless valid_table_joinment?(param['include'])
+      binding.pry
+      association = param['include']
 
-      assocation = param['include']
-
-      @query << "LEFT JOIN #{assocation.pluralize} #{assocation.singularize} ON (data.#{assocation.singularize}_id = #{assocation.singularize}.id) "
+      # Join Statement in case association is polymorphic
+      if scope_associations(:has_and_belongs_to_many).include?(association)
+        # WORKING HERE
+        # @query << "LEFT JOIN #{association.pluralize} #{association.singularize} ON (data.id = #{association.singularize}.data_id) "
+      # Join Statement in case association is belongs to
+      elsif scope_associations(:belongs_to).include?(association)
+        @query << "LEFT JOIN #{association.pluralize} #{association.singularize} ON (data.#{association.singularize}_id = #{association.singularize}.id) "
+      # Join Statement in case association is has many or has one
+      else
+        @query << "LEFT JOIN #{association.pluralize} #{association.singularize} ON (data.id = #{association.singularize}.data_id) "
+      end
     end
   end
 
+  #
+  # Loop throught the parameters and add where's statements to query's array
   def build_wheres
     @parameters.each do |param|
       case param['operator']

@@ -5,6 +5,12 @@
 # Some brand examples: ["Pop! Rides", "Pop!", "Pin", "Pop! Keychain"]
 class Brand < ApplicationRecord
   #
+  # Constants
+  #
+
+  SEARCHABLE_FIELDS = %w[id name]
+
+  #
   # Associations
   #
 

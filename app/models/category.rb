@@ -5,6 +5,12 @@
 # Some categories examples: ["Other", "Television", "Movies", "Heroes", "Animation"]
 class Category < ApplicationRecord
   #
+  # Constants
+  #
+
+  SEARCHABLE_FIELDS = %w[id name]
+
+  #
   # Associations
   #
 

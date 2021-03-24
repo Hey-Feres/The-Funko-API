@@ -5,6 +5,12 @@
 # Some events examples: ["Funko Fair 2021", "San Diego Comic Con 2021"]
 class Event < ApplicationRecord
   #
+  # Constants
+  #
+
+  SEARCHABLE_FIELDS = %w[id name]
+
+  #
   # Associations
   #
 

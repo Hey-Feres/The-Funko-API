@@ -5,6 +5,12 @@
 # Some features examples: ["Metallic", "Glows in the Dark"]
 class Feature < ApplicationRecord
   #
+  # Constants
+  #
+
+  SEARCHABLE_FIELDS = %w[id name]
+
+  #
   # Associations
   #
 

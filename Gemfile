@@ -13,6 +13,12 @@ gem 'puma', '~> 4.1'
 gem 'bootsnap', '>= 1.4.2', require: false
 # Use Rack CORS for handling Cross-Origin Resource Sharing (CORS), making cross-origin AJAX possible
 gem 'rack-cors'
+# Devise is a flexible authentication solution for Rails based on Warden
+gem 'devise'
+# Simple, multi-client and secure token-based authentication for Rails
+gem 'devise_token_auth'
+
+# ProgressBar is a simple Ruby library for displaying progress of long-running tasks on the console.
 gem 'progress_bar'
 
 group :development, :test do

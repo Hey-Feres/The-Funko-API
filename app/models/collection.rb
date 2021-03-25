@@ -13,6 +13,7 @@ class Collection < ApplicationRecord
   # Assocations
   #
 
+  belongs_to :user, dependent: :destroy
   has_and_belongs_to_many :items, dependent: :destroy
 
   #

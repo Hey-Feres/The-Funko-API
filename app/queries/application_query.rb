@@ -143,7 +143,10 @@ class ApplicationQuery
       # Join Statement in case association is polymorphic
       if scope_associations(:has_and_belongs_to_many).include?(association)
         # WORKING HERE
-        # @query << "LEFT JOIN #{association.pluralize} #{association.singularize} ON (data.id = #{association.singularize}.data_id) "
+        @query << "LEFT JOIN #{association.pluralize} #{association.singularize} ON (data.id = #{association.singularize}.data_id) "
+
+        # Ex:
+        # @query << "LEFT JOIN events_items event_item ON (data.id = event_item.item.id) "
       # Join Statement in case association is belongs to
       elsif scope_associations(:belongs_to).include?(association)
         @query << "LEFT JOIN #{association.pluralize} #{association.singularize} ON (data.#{association.singularize}_id = #{association.singularize}.id) "

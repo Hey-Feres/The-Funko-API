@@ -8,3 +8,5 @@
 
 seeder = SeedDatabase.new
 seeder.call
+
+# user = User.create(email: 'bruno@teste.com', password: '123456')

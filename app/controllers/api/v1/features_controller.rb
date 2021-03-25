@@ -24,12 +24,14 @@ module Api
       def index
         @features = Feature.all
 
+        authorize @features
         render json: @features
       end
 
       #
       # GET /features/1
       def show
+        authorize @feature
         render json: @feature
       end
 

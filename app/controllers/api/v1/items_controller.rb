@@ -24,12 +24,14 @@ module Api
       def index
         @items = Item.all
 
+        authorize @items
         render json: @items, include: %i[brand category events features license]
       end
 
       #
       # GET /items/1
       def show
+        authorize @item
         render json: @item, include: %i[brand category events features license]
       end
 

@@ -24,12 +24,14 @@ module Api
       def index
         @events = Event.all
 
+        authorize @events
         render json: @events
       end
 
       #
       # GET /events/1
       def show
+        authorize @event
         render json: @event
       end
 

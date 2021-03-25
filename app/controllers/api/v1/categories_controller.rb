@@ -24,12 +24,14 @@ module Api
       def index
         @categories = Category.all
 
+        authorize @categories
         render json: @categories
       end
 
       #
       # GET /categories/1
       def show
+        authorize @category
         render json: @category
       end
 

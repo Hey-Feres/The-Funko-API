@@ -24,12 +24,14 @@ module Api
       def index
         @licenses = License.all
 
+        authorize @licenses
         render json: @licenses
       end
 
       #
       # GET /licenses/1
       def show
+        authorize @license
         render json: @license
       end
 

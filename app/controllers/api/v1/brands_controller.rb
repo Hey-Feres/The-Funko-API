@@ -24,12 +24,14 @@ module Api
       def index
         @brands = Brand.all
 
+        authorize @brands
         render json: @brands
       end
 
       #
       # GET /brands/1
       def show
+        authorize @brand
         render json: @brand
       end
 

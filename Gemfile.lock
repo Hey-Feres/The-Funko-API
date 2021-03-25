@@ -112,6 +112,8 @@ GEM
       method_source (~> 1.0)
     puma (4.3.7)
       nio4r (~> 2.0)
+    pundit (2.1.0)
+      activesupport (>= 3.0.0)
     racc (1.5.2)
     rack (2.2.3)
     rack-cors (1.1.1)
@@ -186,6 +188,7 @@ DEPENDENCIES
   progress_bar
   pry
   puma (~> 4.1)
+  pundit
   rack-cors
   rails (~> 6.0.3)
   spring

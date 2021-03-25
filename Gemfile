@@ -17,8 +17,9 @@ gem 'rack-cors'
 gem 'devise'
 # Simple, multi-client and secure token-based authentication for Rails
 gem 'devise_token_auth'
-
-# ProgressBar is a simple Ruby library for displaying progress of long-running tasks on the console.
+# Pundit helps to build a simple, robust and scalable authorization system
+gem 'pundit'
+# ProgressBar is a simple Ruby library for displaying progress of long-running tasks on the console
 gem 'progress_bar'
 
 group :development, :test do

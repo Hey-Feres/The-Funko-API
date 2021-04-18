@@ -21,11 +21,7 @@ module Api
 
       #
       # GET /wish_lists
-      def index
-        @wish_lists = WishList.all
-
-        render json: @wish_lists, include: %i[items]
-      end
+      def index; end
 
       #
       # GET /wish_lists/1

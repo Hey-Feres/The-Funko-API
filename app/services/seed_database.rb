@@ -1,8 +1,6 @@
 class SeedDatabase
   def initialize
-    new_data_fetch     = GetFunkoItems.new.result
-
-    @new_data_fetch    = JSON.parse(new_data_fetch)
+    @new_data_fetch    = GetFunkoItems.new.result
     @last_data_fetched = DataFetch.all&.last&.data
   end
 
@@ -15,79 +13,116 @@ class SeedDatabase
   def data
     return unless should_seed_database?
 
-    # Get the diff bewteen the data that already been fetched
-    # and the new one.
+    # Get the diff bewteen the data that already been fetched and the new one.
     @last_data_fetched ? @new_data_fetch - @last_data_fetched : @new_data_fetch
   end
 
-  def seed_categories
-    categories = data.map{|data| data['category']}.uniq
-    categories.delete(nil)
-    categories = categories.map{|data| data.split(',')}.flatten.uniq
+  def filter_categories(object); object[5] end
 
-    categories.each do |category|
-      Category.find_or_create_by(name: category)
+  def filter_events(object); object[9] end
+
+  def filter_licenses(object); object[4] end
+
+  def filter_brands(object); object[6] end
+
+  def filter_features(object); object[8] end
+
+  def seed_categories
+    categories_data = data.map{|data| filter_categories(data)}.uniq
+    categories_data.delete(nil)
+    categories_data = categories_data.map{|data| data.split(',')}.flatten.uniq
+    categories = []
+
+    categories_data.each do |category_name|
+      category = Category.find_or_initialize_by(name: category_name)
+      categories << category if category.new_record?
     end
+
+    Category.import(categories)
   end
 
   def seed_events
-    events = data.map{ |data| data['events'] }.uniq
-    events.delete(nil)
-    events = events.map{|data| data.split(',')}.flatten.uniq
+    events_data = data.map{|data| filter_events(data)}.uniq
+    events_data.delete(nil)
+    events_data = events_data.map{|data| data.split(',')}.flatten.uniq
+    events = []
 
-    events.each do |event|
-      Event.find_or_create_by(name: event)
+    events_data.each do |event_name|
+      event = Event.find_or_initialize_by(name: event_name)
+      events << event if event.new_record?
     end
+
+    Event.import(events)
   end
 
   def seed_licenses
-    licenses = data.map{ |data| data['license'] }.uniq
-    licenses.delete(nil)
-    licenses = licenses.map{|data| data.split(',')}.flatten.uniq
+    licenses_data = data.map{|data| filter_licenses(data)}.uniq
+    licenses_data.delete(nil)
+    licenses_data = licenses_data.map{|data| data.split(',')}.flatten.uniq
+    licenses = []
 
-    licenses.each do |license|
-      License.find_or_create_by(name: license)
+    licenses_data.each do |license_name|
+      license = License.find_or_initialize_by(name: license_name)
+      licenses << license if license.new_record?
     end
+
+    License.import(licenses)
   end
 
   def seed_brands
-    brands = data.map{ |data| data['brand'] }.uniq
-    brands.delete(nil)
-    brands = brands.map{|data| data.split(',')}.flatten.uniq
+    brands_data = data.map{ |data| filter_brands(data)}.uniq
+    brands_data.delete(nil)
+    brands_data = brands_data.map{|data| data.split(',')}.flatten.uniq
+    brands = []
 
-    brands.each do |brand|
-      Brand.find_or_create_by(name: brand)
+    brands_data.each do |brand_name|
+      brand = Brand.find_or_initialize_by(name: brand_name)
+      brands << brand if brand.new_record?
     end
+
+    Brand.import(brands)
   end
 
   def seed_features
-    features = data.map{ |data| data['features'] }.uniq
-    features.delete(nil)
-    features = features.map{|data| data.split(',')}.flatten.uniq
+    features_data = data.map{ |data| filter_features(data) }.uniq
+    features_data.delete(nil)
+    features_data = features_data.map{|data| data.split(',')}.flatten.uniq
+    features = []
 
-    features.each do |feature|
-      Feature.find_or_create_by(name: feature)
+    features_data.each do |feature_name|
+      feature = Feature.find_or_initialize_by(name: feature_name)
+      features << feature if feature.new_record?
     end
+
+    Feature.import(features)
   end
 
   def seed_items
-    data[0..-1].each do |data|
+    items = []
+
+    data[0..-1].each do |data_item|
       item = Item.new(
-        number: data['item-number'],
-        title: data['title'],
-        form_factor: data['form-factor'],
-        inner_case_count: data['inner-case-count'],
-        master_case_quantity: data['master-case-quantity'],
-        status: data['status'],
-        image_url: data['image-url']
+        number: data_item[1],
+        title: data_item[3],
+        form_factor: data_item[7],
+        inner_case_count: data_item[10],
+        master_case_quantity: data_item[11],
+        status: data_item[12],
+        image_url: data_item[13]
       )
 
-      item.category = Category.find_by(name: data['category']) if data['category'].present?
-      item.license  = License.find_by(name: data['license']) if data['license'].present?
-      item.brand    = Brand.find_by(name: data['brand']) if data['brand'].present?
+      category_name = filter_categories(data_item)
+      license_name = filter_licenses(data_item)
+      brand_name = filter_brands(data_item)
 
-      if data['events'].present?
-        data['events'].split(',').each do |event_name|
+      item.category = Category.find_by(name: category_name) if category_name.present?
+      item.license  = License.find_by(name: license_name) if license_name.present?
+      item.brand    = Brand.find_by(name: brand_name) if brand_name.present?
+
+      event_names = filter_events(data_item)
+
+      if event_names.present?
+        event_names.split(',').each do |event_name|
           event = Event.find_by(name: event_name)
 
           if event.present?
@@ -96,8 +131,10 @@ class SeedDatabase
         end
       end
 
-      if data['features'].present?
-        data['features'].split(',').each do |feature_name|
+      feature_names = filter_features(data_item)
+
+      if feature_names.present?
+        feature_names.split(',').each do |feature_name|
           feature = Feature.find_by(name: feature_name)
 
           if feature.present?
@@ -106,18 +143,23 @@ class SeedDatabase
         end
       end
 
-      item.save!
+      items << item
     end
+
+    Item.import(items)
   end
 
   def call
-    seed_categories
-    seed_events
-    seed_licenses
-    seed_brands
-    seed_features
-    seed_items
+    time = Benchmark.measure do
+      seed_categories
+      seed_events
+      seed_licenses
+      seed_brands
+      seed_features
+      seed_items
 
-    DataFetch.create!(data: data, fetched_at: DateTime.now)
+      DataFetch.create!(data: data, fetched_at: DateTime.now)
+    end
+    puts "Finished in #{time} seconds"
   end
 end

@@ -21,12 +21,7 @@ module Api
 
       #
       # GET /features
-      def index
-        @features = Feature.all
-
-        authorize @features
-        render json: @features
-      end
+      def index; end
 
       #
       # GET /features/1

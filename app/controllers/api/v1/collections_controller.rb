@@ -21,11 +21,7 @@ module Api
 
       #
       # GET /collections
-      def index
-        @collections = Collection.all
-
-        render json: @collections, include: %i[items]
-      end
+      def index; end
 
       #
       # GET /collections/1

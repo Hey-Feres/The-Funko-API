@@ -21,12 +21,7 @@ module Api
 
       #
       # GET /events
-      def index
-        @events = Event.all
-
-        authorize @events
-        render json: @events
-      end
+      def index; end
 
       #
       # GET /events/1

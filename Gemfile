@@ -21,6 +21,10 @@ gem 'devise_token_auth'
 gem 'pundit'
 # ProgressBar is a simple Ruby library for displaying progress of long-running tasks on the console
 gem 'progress_bar'
+# Activerecord-Import is a library for bulk inserting data using ActiveRecord
+gem 'activerecord-import'
+# This gem is a C binding to the excellent YAJL JSON parsing and generation library
+gem 'yajl-ruby', require: 'yajl'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

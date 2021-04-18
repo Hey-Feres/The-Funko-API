@@ -21,12 +21,7 @@ module Api
 
       #
       # GET /categories
-      def index
-        @categories = Category.all
-
-        authorize @categories
-        render json: @categories
-      end
+      def index; end
 
       #
       # GET /categories/1

@@ -9,6 +9,11 @@ module Api
     #
     # Controller that handle all the licenses requests
     class SearchesController < ApplicationController
+      #
+      # Callbacks
+      #
+
+      skip_before_action :set_index
       before_action :filter_search_params
 
       #

@@ -1,5 +1,6 @@
 require 'csv'
 require 'open-uri'
+require 'yajl'
 
 class GetFunkoItems
   def initialize(url: 'https://www.funko.com/documents/wholesale-catalog.csv')
@@ -10,12 +11,8 @@ class GetFunkoItems
     URI.open(@uri)
   end
 
-  def parsed_data
-    JSON.parse(
-      CSV.parse(
-        File.read(data_path), headers: true
-      ).to_json
-    )
+  def json_data
+    StringIO.new(CSV.parse(File.read(data_path), headers: true).to_json)
   end
 
   def headers
@@ -25,20 +22,7 @@ class GetFunkoItems
   def result
     puts 'Starting data fetch'
 
-    filtered_data = []
-
-    data = Rails.env.production? ? parsed_data[1..-1] : parsed_data[1..50]
-    bar = ProgressBar.new(data.count)
-
-    data.each do |d|
-      x = {}
-      headers.each_with_index do |k, i|
-        x[k] = d[i]
-      end
-      filtered_data << x
-      bar.increment!
-    end
-
-    filtered_data.to_json
+    parser = Yajl::Parser.new(symbolize_keys: true)
+    parser.parse(json_data)[1..-1]
   end
 end

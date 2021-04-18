@@ -21,12 +21,7 @@ module Api
 
       #
       # GET /licenses
-      def index
-        @licenses = License.all
-
-        authorize @licenses
-        render json: @licenses
-      end
+      def index; end
 
       #
       # GET /licenses/1

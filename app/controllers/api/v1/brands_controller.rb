@@ -21,12 +21,7 @@ module Api
 
       #
       # GET /brands
-      def index
-        @brands = Brand.all
-
-        authorize @brands
-        render json: @brands
-      end
+      def index; end
 
       #
       # GET /brands/1

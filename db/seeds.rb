@@ -6,7 +6,7 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
-seeder = SeedDatabase.new
-seeder.call
+
+SeedDatabase.new.call
 
 # user = User.create(email: 'bruno@teste.com', password: '123456')

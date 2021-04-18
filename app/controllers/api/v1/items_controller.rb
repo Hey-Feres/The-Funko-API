@@ -21,12 +21,7 @@ module Api
 
       #
       # GET /items
-      def index
-        @items = Item.all
-
-        authorize @items
-        render json: @items, include: %i[brand category events features license]
-      end
+      def index; end
 
       #
       # GET /items/1

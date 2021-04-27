@@ -2,10 +2,10 @@
 
 Unnofficial Funko API
 
+[Check the Docs](https://the-funko-api-docs.vercel.app)
+
 #### To Do
 
 - [ ] Write some tests
-- [ ] Search Feature
 - [ ] Ordering Feature
-- [ ] Write a Documentation
 - [ ] Add Data Serialization

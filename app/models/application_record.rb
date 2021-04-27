@@ -6,5 +6,7 @@ class ApplicationRecord < ActiveRecord::Base
   #
   # Modules
   #
+
   include Paginatable
+  include Searchable
 end

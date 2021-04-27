@@ -42,10 +42,28 @@ class ApplicationController < ActionController::API
     end
 
     #
+    # Return the search by param
+    def search_by
+      params[:search_by]
+    end
+
+    #
+    # Return the search for param
+    def search_for
+      params[:search_for]
+    end
+
+    #
+    # Check if search_by and search_for params are present
+    def should_apply_search?
+      search_by.present? && search_for.present?
+    end
+
+    #
     # Set the index endpoints data
     def set_index
       @scope = scope
-      # @scope = @scope.search(search_by, search_for) if should_apply_search?
+      @scope = @scope.search(search_by, search_for) if should_apply_search?
       @scope = @scope.paginate(page, length)
 
       render json: @scope, meta: { page: page, total: scope.total_pages(length) }

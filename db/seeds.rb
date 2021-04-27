@@ -8,5 +8,4 @@
 
 
 SeedDatabase.new.call
-
 # user = User.create(email: 'bruno@teste.com', password: '123456')

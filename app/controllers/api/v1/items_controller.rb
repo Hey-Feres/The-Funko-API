@@ -27,7 +27,7 @@ module Api
       # GET /items/1
       def show
         authorize @item
-        render json: @item, include: %i[brand category events features license]
+        render json: @item
       end
 
       private

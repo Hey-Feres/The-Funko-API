@@ -7,7 +7,18 @@ class Item < ApplicationRecord
   # Constants
   #
 
-  SEARCHABLE_FIELDS = %w[id number title form_factor features inner_case_count master_case_quantity status]
+  SEARCHABLE_FIELDS   = %w[
+    id number title form_factor features
+    inner_case_count master_case_quantity
+    status
+  ]
+
+  SERIALIZABLE_FIELDS = %w[
+    id number title form_factor features
+    inner_case_count master_case_quantity
+    status category license brand events
+    features
+  ]
 
   #
   # Associations

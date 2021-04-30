@@ -9,6 +9,7 @@ class Category < ApplicationRecord
   #
 
   SEARCHABLE_FIELDS = %w[id name]
+  SERIALIZABLE_FIELDS = %w[id name]
 
   #
   # Associations

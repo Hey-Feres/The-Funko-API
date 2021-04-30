@@ -8,4 +8,3 @@ Unnofficial Funko API
 
 - [ ] Write some tests
 - [ ] Ordering Feature
-- [ ] Add Data Serialization

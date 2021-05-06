@@ -9,7 +9,7 @@ class License < ApplicationRecord
   #
 
   SEARCHABLE_FIELDS = %w[id name]
-  SERIALIZABLE_FIELDS = %w[id name]
+  SERIALIZABLE_FIELDS = %w[id name items_quantity]
 
   #
   # Associations

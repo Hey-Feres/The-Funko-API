@@ -1,0 +1,1 @@
+Predictor.redis = Redis.new(url: 'redis://:pa7b0b0a9cf1a577d2f8ca1c3e138c9ecd716e90c5b229daa8296e5da80906448@ec2-23-21-118-213.compute-1.amazonaws.com:23139')

@@ -17,6 +17,7 @@ class ApplicationController < ActionController::API
   #
 
   before_action :set_index, only: %i[index]
+  before_action :set_associated_items, only: %i[items]
 
   #
   # Methods
@@ -66,6 +67,27 @@ class ApplicationController < ActionController::API
       @scope = @scope.search(search_by, search_for) if should_apply_search?
       @scope = @scope.paginate(page, length)
 
-      render json: @scope, meta: { page: page, total: scope.total_pages(length) }
+      @meta  = {
+        page: page,
+        length: length,
+        total: scope.count,
+        total_pages: scope.total_pages(length)
+      }
+
+      render json: @scope, meta: @meta
+    end
+
+    #
+    # Set scope for associated items
+    def set_associated_items
+      id      = params["#{scope.to_s.downcase}_id".to_sym]
+      model   = scope.find(id)
+      @items  = model.items.paginate(page, length)
+      @meta   = {
+        page: page,
+        length: length,
+        total: model.items.count,
+        total_pages: model.items.total_pages(length)
+      }
     end
 end

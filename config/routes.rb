@@ -3,14 +3,31 @@ Rails.application.routes.draw do
 
   namespace :api do
     namespace :v1 do
-      resources :features, only: %i[index show]
       resources :items, only: %i[index show]
-      resources :brands, only: %i[index show]
-      resources :licenses, only: %i[index show]
-      resources :events, only: %i[index show]
-      resources :categories, only: %i[index show]
+
+      resources :features, only: %i[index show] do
+        get '/items', to: 'features#items'
+      end
+
+      resources :brands, only: %i[index show] do
+        get '/items', to: 'brands#items'
+      end
+
+      resources :licenses, only: %i[index show] do
+        get '/items', to: 'licenses#items'
+      end
+
+      resources :events, only: %i[index show] do
+        get '/items', to: 'events#items'
+      end
+
+      resources :categories, only: %i[index show] do
+        get '/items', to: 'categories#items'
+      end
+
       resources :collections
       resources :wish_lists
+
       post      :search, to: 'searches#index'
     end
   end

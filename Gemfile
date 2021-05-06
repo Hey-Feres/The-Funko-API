@@ -27,6 +27,8 @@ gem 'activerecord-import'
 gem 'yajl-ruby', require: 'yajl'
 # ActiveModelSerializers is undergoing some renovations
 gem 'active_model_serializers'
+# Fast and efficient recommendations and predictions using Ruby & Redis
+gem 'predictor'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

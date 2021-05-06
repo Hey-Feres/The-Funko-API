@@ -30,6 +30,12 @@ module Api
         render json: @license
       end
 
+      #
+      # GET /licenses/1/items
+      def items
+        render json: @items, meta: @meta
+      end
+
       private
         #
         # Use callbacks to share common setup or constraints between actions.

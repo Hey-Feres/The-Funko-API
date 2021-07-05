@@ -1,47 +1,23 @@
 # frozen_string_literal: true
 
-#
-# Api Module
-module Api
-  #
-  # Version 1 Module
-  module V1
-    #
-    # Controller that handle all the licenses requests
-    class LicensesController < ApplicationController
-      #
-      # Callbacks
-      #
+module Api::V1
+  class LicensesController < ApplicationController
+    before_action :set_license, only: %i[show]
 
-      before_action :set_license, only: %i[show]
+    def index; end
 
-      #
-      # Actions
-      #
-
-      #
-      # GET /licenses
-      def index; end
-
-      #
-      # GET /licenses/1
-      def show
-        authorize @license
-        render json: @license
-      end
-
-      #
-      # GET /licenses/1/items
-      def items
-        render json: @items, meta: @meta
-      end
-
-      private
-        #
-        # Use callbacks to share common setup or constraints between actions.
-        def set_license
-          @license = License.find(params[:id])
-        end
+    def show
+      authorize @license
+      render json: @license
     end
+
+    def items
+      render json: @items, meta: @meta
+    end
+
+    private
+      def set_license
+        @license = License.find_by(slug: params[:id])
+      end
   end
 end

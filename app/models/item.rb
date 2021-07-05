@@ -1,12 +1,6 @@
 # frozen_string_literal: true
 
-#
-# Item model handle the logic of funko's items
 class Item < ApplicationRecord
-  #
-  # Constants
-  #
-
   SEARCHABLE_FIELDS   = %w[
     id number title form_factor features
     inner_case_count master_case_quantity
@@ -19,10 +13,6 @@ class Item < ApplicationRecord
     status category license brand events
     image_url features
   ]
-
-  #
-  # Associations
-  #
 
   belongs_to :category, optional: true
   belongs_to :license, optional: true
@@ -37,9 +27,5 @@ class Item < ApplicationRecord
   has_many :users_collections, through: :collections, source: :user
   has_many :users_wish_lists,  through: :wish_lists, source: :user
 
-  #
-  # Validations
-  #
-
-  validates :title, :number, presence: true
+  validates :title, :number, :slug, presence: true
 end

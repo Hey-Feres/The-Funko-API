@@ -1,24 +1,16 @@
 # frozen_string_literal: true
 
-#
-# Class that handle basic queries
 class ApplicationQuery
-  #
-  # Initialize the class instance
   def initialize(scope: nil, params: [])
     @scope = scope
     @parameters = params
     @query = []
   end
 
-  #
-  # Check if the received params is valid
   def valid_params?(param)
     return true unless param['key'].nil? || param['value'].nil? || param['conjunctor'].nil?
   end
 
-  #
-  # Include Query
   def query_in(param)
     return unless valid_params?(param)
 
@@ -28,8 +20,6 @@ class ApplicationQuery
     "#{param['conjunctor']} data.#{param['key']} = ANY('#{parsed_array}') "
   end
 
-  #
-  # Not Include Query
   def query_not_in(param)
     return unless valid_params?(param)
 
@@ -39,8 +29,6 @@ class ApplicationQuery
     "#{param['conjunctor']} NOT (data.#{param['key']} = ANY('#{parsed_array}')) "
   end
 
-  #
-  # Equal Query
   def query_equal(param)
     return unless valid_params?(param)
 
@@ -48,8 +36,6 @@ class ApplicationQuery
     "#{param['conjunctor']} data.#{param['key']} = '#{param['value']}' "
   end
 
-  #
-  # Not Equal Query
   def query_not_equal(param)
     return unless valid_params?(param)
 
@@ -57,8 +43,6 @@ class ApplicationQuery
     "#{param['conjunctor']} NOT data.#{param['key']} = '#{param['value']}' "
   end
 
-  #
-  # Like Query
   def query_like(param)
     return unless valid_params?(param)
 
@@ -68,8 +52,6 @@ class ApplicationQuery
     "#{param['conjunctor']} #{key} ILIKE '%#{param['value']}%' "
   end
 
-  #
-  # Greather Than Query
   def query_greather_than(param)
     return unless valid_params?(param)
 
@@ -77,8 +59,6 @@ class ApplicationQuery
     "#{param['conjunctor']} data.#{param['key']} > '#{param['value']}' "
   end
 
-  #
-  # Greather or Equal Than Query
   def query_greather_or_equal_than(param)
     return unless valid_params?(param)
 
@@ -86,8 +66,6 @@ class ApplicationQuery
     "#{param['conjunctor']} data.#{param['key']} >= '#{param['value']}' "
   end
 
-  #
-  # Less Than Query
   def query_less_than(param)
     return unless valid_params?(param)
 
@@ -95,8 +73,6 @@ class ApplicationQuery
     "#{param['conjunctor']} data.#{param['key']} < '#{param['value']}' "
   end
 
-  #
-  # Less or Equal Than Query
   def query_less_or_equal_than(param)
     return unless valid_params?(param)
 
@@ -104,8 +80,6 @@ class ApplicationQuery
     "#{param['conjunctor']} data.#{param['key']} <= '#{param['value']}' "
   end
 
-  #
-  # Return the associations of scope by type
   def scope_associations(assocation)
     return if assocation.blank?
 
@@ -123,8 +97,6 @@ class ApplicationQuery
     end
   end
 
-  #
-  # Check if the attribute that is been used to join table is valid association
   def valid_table_joinment?(param)
     return true if scope_associations(:belongs_to).include?(param) ||
                    scope_associations(:has_one).include?(param) ||
@@ -132,8 +104,6 @@ class ApplicationQuery
                    scope_associations(:has_and_belongs_to_many).include?(param)
   end
 
-  #
-  # Loop throught the parameters and add table's join statements to query's array
   def build_joinments
     @parameters.each do |param|
       return unless valid_table_joinment?(param['include'])
@@ -157,8 +127,6 @@ class ApplicationQuery
     end
   end
 
-  #
-  # Loop throught the parameters and add where's statements to query's array
   def build_wheres
     @parameters.each do |param|
       case param['operator']
@@ -187,8 +155,6 @@ class ApplicationQuery
     end
   end
 
-  #
-  # Loop all the params to build the complete query
   def build_query
     @query << "SELECT data.* FROM #{@scope.to_s.pluralize.parameterize} data "
 
@@ -201,8 +167,6 @@ class ApplicationQuery
     @query = @query.join
   end
 
-  #
-  # Runs the query
   def call
     results = ActiveRecord::Base.connection.exec_query(build_query)
   end

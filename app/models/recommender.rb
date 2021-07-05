@@ -1,3 +1,6 @@
+#
+# **** WIP Class ****
+#
 class Recommender
   #
   # Modules

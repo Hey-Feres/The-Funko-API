@@ -1,10 +1,6 @@
 # frozen_string_literal: true
 
-#
-# Helpers that are used across the application for different concepts
 module ApplicationHelper
-  #
-  # Define the model name trought controller name
   def model_from_controller(controller = '')
     return if controller&.to_s.blank?
 

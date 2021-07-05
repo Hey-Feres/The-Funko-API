@@ -1,47 +1,23 @@
 # frozen_string_literal: true
 
-#
-# Api Module
-module Api
-  #
-  # Version 1 Module
-  module V1
-    #
-    # Controller that handle all the categories requests
-    class CategoriesController < ApplicationController
-      #
-      # Callbacks
-      #
+module Api::V1
+  class CategoriesController < ApplicationController
+    before_action :set_category, only: %i[show]
 
-      before_action :set_category, only: %i[show]
+    def index; end
 
-      #
-      # Actions
-      #
-
-      #
-      # GET /categories
-      def index; end
-
-      #
-      # GET /categories/1
-      def show
-        authorize @category
-        render json: @category
-      end
-
-      #
-      # GET /categories/1/items
-      def items
-        render json: @items, meta: @meta
-      end
-
-      private
-        #
-        # Use callbacks to share common setup or constraints between actions.
-        def set_category
-          @category = Category.find(params[:id])
-        end
+    def show
+      authorize @category
+      render json: @category
     end
+
+    def items
+      render json: @items, meta: @meta
+    end
+
+    private
+      def set_category
+        @category = Category.find(params[:id])
+      end
   end
 end

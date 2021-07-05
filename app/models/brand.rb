@@ -1,25 +1,12 @@
 # frozen_string_literal: true
 
-#
-# Brand model handle the logic of item's brand
-# Some brand examples: ["Pop! Rides", "Pop!", "Pin", "Pop! Keychain"]
 class Brand < ApplicationRecord
-  #
-  # Constants
-  #
+  # Some brand examples: ["Pop! Rides", "Pop!", "Pin", "Pop! Keychain"]
 
-  SEARCHABLE_FIELDS = %w[id name]
-  SERIALIZABLE_FIELDS = %w[id name]
-
-  #
-  # Associations
-  #
+  SEARCHABLE_FIELDS = %w[id name slug]
+  SERIALIZABLE_FIELDS = %w[id name slug]
 
   has_many :items
 
-  #
-  # Validations
-  #
-
-  validates :name, presence: true
+  validates :name, :slug, presence: true
 end

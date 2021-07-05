@@ -1,47 +1,23 @@
 # frozen_string_literal: true
 
-#
-# Api Module
-module Api
-  #
-  # Version 1 Module
-  module V1
-    #
-    # Controller that handle all the brands requests
-    class BrandsController < ApplicationController
-      #
-      # Callbacks
-      #
+module Api::V1
+  class BrandsController < ApplicationController
+    before_action :set_brand, only: %i[show]
 
-      before_action :set_brand, only: %i[show]
+    def index; end
 
-      #
-      # Actions
-      #
-
-      #
-      # GET /brands
-      def index; end
-
-      #
-      # GET /brands/1
-      def show
-        authorize @brand
-        render json: @brand
-      end
-
-      #
-      # GET /brands/1/items
-      def items
-        render json: @items, meta: @meta
-      end
-
-      private
-        #
-        # Use callbacks to share common setup or constraints between actions.
-        def set_brand
-          @brand = Brand.find(params[:id])
-        end
+    def show
+      authorize @brand
+      render json: @brand
     end
+
+    def items
+      render json: @items, meta: @meta
+    end
+
+    private
+      def set_brand
+        @brand = Brand.find(params[:id])
+      end
   end
 end

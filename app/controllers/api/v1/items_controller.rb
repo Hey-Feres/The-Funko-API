@@ -1,41 +1,19 @@
 # frozen_string_literal: true
 
-#
-# Api Module
-module Api
-  #
-  # Version 1 Module
-  module V1
-    #
-    # Controller that handle all the items requests
-    class ItemsController < ApplicationController
-      #
-      # Callbacks
-      #
+module Api::V1
+  class ItemsController < ApplicationController
+    before_action :set_item, only: %i[show]
 
-      before_action :set_item, only: %i[show]
+    def index; end
 
-      #
-      # Actions
-      #
-
-      #
-      # GET /items
-      def index; end
-
-      #
-      # GET /items/1
-      def show
-        authorize @item
-        render json: @item
-      end
-
-      private
-        #
-        # Use callbacks to share common setup or constraints between actions.
-        def set_item
-          @item = Item.find(params[:id])
-        end
+    def show
+      authorize @item
+      render json: @item
     end
+
+    private
+      def set_item
+        @item = Item.find(params[:id])
+      end
   end
 end

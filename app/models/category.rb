@@ -1,25 +1,12 @@
 # frozen_string_literal: true
 
-#
-# Category model handle the logic of item's categories
-# Some categories examples: ["Other", "Television", "Movies", "Heroes", "Animation"]
 class Category < ApplicationRecord
-  #
-  # Constants
-  #
+  # Some categories examples: ["Other", "Television", "Movies", "Heroes", "Animation"]
 
-  SEARCHABLE_FIELDS = %w[id name]
-  SERIALIZABLE_FIELDS = %w[id name]
-
-  #
-  # Associations
-  #
+  SEARCHABLE_FIELDS = %w[id name slug]
+  SERIALIZABLE_FIELDS = %w[id name slug]
 
   has_many :items
 
-  #
-  # Validations
-  #
-
-  validates :name, presence: true
+  validates :name, :slug, presence: true
 end

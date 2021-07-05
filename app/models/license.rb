@@ -1,25 +1,12 @@
 # frozen_string_literal: true
 
-#
-# License model handle the logic of item's licenses
-# Some licenses examples: ["Mortal Kombat", "Star Trek", "Marvel", "Naruto", "Disney Animation"]
 class License < ApplicationRecord
-  #
-  # Constants
-  #
+  # Some licenses examples: ["Mortal Kombat", "Star Trek", "Marvel", "Naruto", "Disney Animation"]
 
-  SEARCHABLE_FIELDS = %w[id name]
-  SERIALIZABLE_FIELDS = %w[id name items_quantity]
-
-  #
-  # Associations
-  #
+  SEARCHABLE_FIELDS = %w[id name slug]
+  SERIALIZABLE_FIELDS = %w[id name slug items_quantity]
 
   has_many :items
 
-  #
-  # Validations
-  #
-
-  validates :name, presence: true
+  validates :name, :slug, presence: true
 end

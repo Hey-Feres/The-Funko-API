@@ -1,25 +1,12 @@
 # frozen_string_literal: true
 
-#
-# Feature model handle the logic of item's features
-# Some features examples: ["Metallic", "Glows in the Dark"]
 class Feature < ApplicationRecord
-  #
-  # Constants
-  #
+  # Some features examples: ["Metallic", "Glows in the Dark"]
 
-  SEARCHABLE_FIELDS = %w[id name]
-  SERIALIZABLE_FIELDS = %w[id name]
-
-  #
-  # Associations
-  #
+  SEARCHABLE_FIELDS = %w[id name slug]
+  SERIALIZABLE_FIELDS = %w[id name slug]
 
   has_and_belongs_to_many :items
 
-  #
-  # Validations
-  #
-
-  validates :name, presence: true
+  validates :name, :slug, presence: true
 end

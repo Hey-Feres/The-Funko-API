@@ -1,70 +1,41 @@
 # frozen_string_literal: true
 
-#
-# Api Module
-module Api
-  #
-  # Version 1 Module
-  module V1
-    #
-    # Controller that handle all the licenses requests
-    class SearchesController < ApplicationController
-      #
-      # Callbacks
-      #
+module Api::V1
+  class SearchesController < ApplicationController
+    skip_before_action :set_index
+    before_action :filter_search_params
 
-      skip_before_action :set_index
-      before_action :filter_search_params
+    OPERATOR   = %w[in nin eq not like gt gte lt lte]
+    CONJUNCTOR = ['and', 'or', '']
 
-      #
-      # Constants
-      #
 
-      OPERATOR   = %w[in nin eq not like gt gte lt lte]
-      CONJUNCTOR = ['and', 'or', '']
+    def index
+      @query = ApplicationQuery.new(scope: filter_params[:scope].titleize.constantize, params: filter_params[:search]).call
 
-      #
-      # Actions
-      #
+      render json: @query
+    end
 
-      #
-      # POST /search
-      def index
-        @query = ApplicationQuery.new(scope: filter_params[:scope].titleize.constantize, params: filter_params[:search]).call
-
-        render json: @query
+    private
+      def filter_params
+        params.permit(:scope, search: [ [ :operator, :conjunctor, :include, :key, :value, value: [] ] ])
       end
 
-      private
-        #
-        # Filter the received params
-        def filter_params
-          params.permit(:scope, search: [ [ :operator, :conjunctor, :include, :key, :value, value: [] ] ])
-        end
+      def valid_searchable_attributes
+        params[:scope].titleize.constantize::SEARCHABLE_FIELDS
+      end
 
-        #
-        # Check if the received attributes to be searched is valid
-        def valid_searchable_attributes
-          params[:scope].titleize.constantize::SEARCHABLE_FIELDS
-        end
+      def query_params_valid?(param)
+        return true if OPERATOR.include?(param[:operator]) &&
+                       CONJUNCTOR.include?(param[:conjunctor]) &&
+                       valid_searchable_attributes.include?(param[:key])
+      end
 
-        #
-        # Conditional that check if the received params match with the validations
-        def query_params_valid?(param)
-          return true if OPERATOR.include?(param[:operator]) &&
-                         CONJUNCTOR.include?(param[:conjunctor]) &&
-                         valid_searchable_attributes.include?(param[:key])
+      def filter_search_params
+        params[:search].each do |param|
+          raise 'Invalid search parameter' unless query_params_valid?(param)
         end
-
-        #
-        # Filter the received search params
-        def filter_search_params
-          params[:search].each do |param|
-            raise 'Invalid search parameter' unless query_params_valid?(param)
-          end
-        rescue => error
-          error
-        end
-    end
+      rescue => error
+        error
+      end
   end
 end

@@ -6,4 +6,8 @@ class LicenseSerializer < ActiveModel::Serializer
   def items_quantity
     object.items.count
   end
+
+  def items
+    object.items.last(4)
+  end
 end

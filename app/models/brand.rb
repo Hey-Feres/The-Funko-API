@@ -4,7 +4,7 @@ class Brand < ApplicationRecord
   # Some brand examples: ["Pop! Rides", "Pop!", "Pin", "Pop! Keychain"]
 
   SEARCHABLE_FIELDS = %w[id name slug]
-  SERIALIZABLE_FIELDS = %w[id name slug]
+  SERIALIZABLE_FIELDS = %w[id name slug items]
 
   has_many :items
 

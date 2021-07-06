@@ -4,7 +4,7 @@ class License < ApplicationRecord
   # Some licenses examples: ["Mortal Kombat", "Star Trek", "Marvel", "Naruto", "Disney Animation"]
 
   SEARCHABLE_FIELDS = %w[id name slug]
-  SERIALIZABLE_FIELDS = %w[id name slug items_quantity]
+  SERIALIZABLE_FIELDS = %w[id name slug items_quantity items]
 
   has_many :items
 

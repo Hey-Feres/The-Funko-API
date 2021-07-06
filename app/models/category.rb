@@ -4,7 +4,7 @@ class Category < ApplicationRecord
   # Some categories examples: ["Other", "Television", "Movies", "Heroes", "Animation"]
 
   SEARCHABLE_FIELDS = %w[id name slug]
-  SERIALIZABLE_FIELDS = %w[id name slug]
+  SERIALIZABLE_FIELDS = %w[id name slug items]
 
   has_many :items
 

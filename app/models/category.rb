@@ -9,4 +9,8 @@ class Category < ApplicationRecord
   has_many :items
 
   validates :name, :slug, presence: true
+
+  scope :with_items, -> {
+    joins(:items).group('categories.id').having('count(category_id) > 0')
+  }
 end

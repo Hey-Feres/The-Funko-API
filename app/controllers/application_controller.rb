@@ -44,8 +44,6 @@ class ApplicationController < ActionController::API
         total: scope.count,
         total_pages: scope.total_pages(length)
       }
-
-      render json: @scope, meta: @meta
     end
 
     def set_associated_items

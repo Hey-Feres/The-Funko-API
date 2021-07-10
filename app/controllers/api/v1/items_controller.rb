@@ -4,7 +4,9 @@ module Api::V1
   class ItemsController < ApplicationController
     before_action :set_item, only: %i[show]
 
-    def index; end
+    def index
+      render json: @scope, meta: @meta
+    end
 
     def show
       authorize @item

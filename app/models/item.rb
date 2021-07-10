@@ -14,9 +14,9 @@ class Item < ApplicationRecord
     image_url features
   ]
 
-  belongs_to :category, optional: true
-  belongs_to :license, optional: true
-  belongs_to :brand, optional: true
+  belongs_to :category, optional: true, counter_cache: true
+  belongs_to :license, optional: true, counter_cache: true
+  belongs_to :brand, optional: true, counter_cache: true
 
   has_and_belongs_to_many :events
   has_and_belongs_to_many :features

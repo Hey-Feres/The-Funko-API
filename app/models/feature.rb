@@ -9,4 +9,8 @@ class Feature < ApplicationRecord
   has_and_belongs_to_many :items
 
   validates :name, :slug, presence: true
+
+  scope :with_items, -> {
+    joins(:items).group('features.id').having('count(feature_id) > 0')
+  }
 end

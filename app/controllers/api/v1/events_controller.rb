@@ -4,7 +4,9 @@ module Api::V1
   class EventsController < ApplicationController
     before_action :set_event, only: %i[show]
 
-    def index; end
+    def index
+      render json: @scope.with_items, meta: @meta
+    end
 
     def show
       authorize @event

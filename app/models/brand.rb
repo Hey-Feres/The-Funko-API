@@ -9,4 +9,8 @@ class Brand < ApplicationRecord
   has_many :items
 
   validates :name, :slug, presence: true
+
+  scope :with_items, -> {
+    joins(:items).group('brands.id').having('count(brand_id) > 0')
+  }
 end

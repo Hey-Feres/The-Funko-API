@@ -4,7 +4,9 @@ module Api::V1
   class LicensesController < ApplicationController
     before_action :set_license, only: %i[show]
 
-    def index; end
+    def index
+      render json: @scope.with_items, meta: @meta
+    end
 
     def show
       authorize @license

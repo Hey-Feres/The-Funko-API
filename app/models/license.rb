@@ -9,4 +9,8 @@ class License < ApplicationRecord
   has_many :items
 
   validates :name, :slug, presence: true
+
+  scope :with_items, -> {
+    joins(:items).group('licenses.id').having('count(license_id) > 0')
+  }
 end

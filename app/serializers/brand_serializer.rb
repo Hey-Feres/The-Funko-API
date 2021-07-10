@@ -4,6 +4,6 @@ class BrandSerializer < ActiveModel::Serializer
   attributes Brand::SERIALIZABLE_FIELDS
 
   def items
-    object.items.last(4)
+    object.items.first(6)
   end
 end

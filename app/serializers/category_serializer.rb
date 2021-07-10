@@ -4,6 +4,6 @@ class CategorySerializer < ActiveModel::Serializer
   attributes Category::SERIALIZABLE_FIELDS
 
   def items
-    object.items.last(4)
+    object.items.first(6)
   end
 end

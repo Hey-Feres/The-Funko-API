@@ -8,6 +8,6 @@ class LicenseSerializer < ActiveModel::Serializer
   end
 
   def items
-    object.items.last(4)
+    object.items.first(6)
   end
 end

@@ -4,6 +4,6 @@ class EventSerializer < ActiveModel::Serializer
   attributes Event::SERIALIZABLE_FIELDS
 
   def items
-    object.items.last(4)
+    object.items.first(6)
   end
 end

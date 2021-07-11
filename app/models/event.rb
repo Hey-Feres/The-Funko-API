@@ -9,8 +9,4 @@ class Event < ApplicationRecord
   has_and_belongs_to_many :items
 
   validates :name, :slug, presence: true
-
-  scope :with_items, -> {
-    joins(:items).group('events.id').having('count(event_id) > 0')
-  }
 end

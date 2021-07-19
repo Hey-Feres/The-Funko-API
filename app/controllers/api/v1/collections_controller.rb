@@ -14,7 +14,7 @@ module Api::V1
         total: current_user.collections.count,
         total_pages: current_user.collections.total_pages(length)
       }
-      render json: @collections, meta: @meta
+      render json: @collections, include: %i[items], meta: @meta
     end
 
     def show

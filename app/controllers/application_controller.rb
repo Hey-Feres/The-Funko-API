@@ -34,7 +34,7 @@ class ApplicationController < ActionController::API
     end
 
     def set_index
-      @scope = scope
+      @scope = scope.order(created_at: :desc)
       @scope = @scope.search(search_by, search_for) if should_apply_search?
       @scope = @scope.paginate(page, length)
 

@@ -1,7 +1,7 @@
 class SeedDatabase
   def initialize
     @new_data_fetch    = GetFunkoItems.new.result
-    @last_data_fetched = DataFetch.all&.last&.data
+    @last_data_fetched = DataFetch.last.data
     @seed_data = nil
   end
 
@@ -51,6 +51,8 @@ class SeedDatabase
       categories << category if category.new_record?
     end
 
+    return if categories.empty?
+
     Category.import(categories)
   end
 
@@ -66,6 +68,8 @@ class SeedDatabase
       event = Event.find_or_initialize_by(name: event_name)
       events << event if event.new_record?
     end
+
+    return if events.empty?
 
     Event.import(events)
   end
@@ -83,6 +87,8 @@ class SeedDatabase
       licenses << license if license.new_record?
     end
 
+    return if licenses.empty?
+
     License.import(licenses)
   end
 
@@ -99,6 +105,8 @@ class SeedDatabase
       brands << brand if brand.new_record?
     end
 
+    return if brands.empty?
+
     Brand.import(brands)
   end
 
@@ -114,6 +122,8 @@ class SeedDatabase
       feature = Feature.find_or_initialize_by(name: feature_name)
       features << feature if feature.new_record?
     end
+
+    return if features.empty?
 
     Feature.import(features)
   end
@@ -170,7 +180,9 @@ class SeedDatabase
       items << item
     end
 
-    Item.import(items)
+    return if items.empty?
+
+    Item.import items, on_duplicate_key_update: %i[id]
   end
 
   def call

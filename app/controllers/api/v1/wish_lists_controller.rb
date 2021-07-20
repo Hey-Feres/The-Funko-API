@@ -3,6 +3,7 @@
 module Api::V1
   class WishListsController < ApplicationController
     skip_before_action :set_index, only: %i[index]
+    before_action :authenticate_user!
     before_action :set_wish_list, only: %i[show update destroy]
 
     def index

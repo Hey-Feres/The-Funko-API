@@ -2,9 +2,19 @@
 
 module Api::V1
   class WishListsController < ApplicationController
+    skip_before_action :set_index, only: %i[index]
     before_action :set_wish_list, only: %i[show update destroy]
 
-    def index; end
+    def index
+      @wish_lists = current_user.wish_lists.paginate(page, length)
+      @meta  = {
+        page: page,
+        length: length,
+        total: current_user.wish_lists.count,
+        total_pages: current_user.wish_lists.total_pages(length)
+      }
+      render json: @wish_lists, include: %i[items], meta: @meta
+    end
 
     def show
       render json: @wish_list, include: %i[items]

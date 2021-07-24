@@ -62,7 +62,7 @@ class ApplicationController < ActionController::API
     def add_headers
       return unless current_user.present?
 
-      response.headers['CURRENT_USER_DEFAULT_COLLECTION_ID'] = current_user.collections.first.id
-      response.headers['CURRENT_USER_DEFAULT_WISH_LIST_ID']  = current_user.wish_lists.first.id
+      response.headers['CURRENT-USER-DEFAULT-COLLECTION-ID'] = current_user.collections.first.id
+      response.headers['CURRENT-USER-DEFAULT-WISH-LIST-ID']  = current_user.wish_lists.first.id
     end
 end

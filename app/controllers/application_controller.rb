@@ -7,6 +7,7 @@ class ApplicationController < ActionController::API
 
   before_action :set_index, only: %i[index]
   before_action :set_associated_items, only: %i[items]
+  before_action :add_headers
 
   protected
     def scope
@@ -56,5 +57,12 @@ class ApplicationController < ActionController::API
         total: model.items.count,
         total_pages: model.items.total_pages(length)
       }
+    end
+
+    def add_headers
+      return unless current_user.present?
+
+      response.headers['CURRENT_USER_DEFAULT_COLLECTION_ID'] = current_user.collections.first.id
+      response.headers['CURRENT_USER_DEFAULT_WISH_LIST_ID']  = current_user.wish_lists.first.id
     end
 end

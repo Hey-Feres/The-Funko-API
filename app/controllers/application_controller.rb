@@ -7,7 +7,7 @@ class ApplicationController < ActionController::API
 
   before_action :set_index, only: %i[index]
   before_action :set_associated_items, only: %i[items]
-  before_action :add_headers
+  after_action :add_headers
 
   protected
     def scope

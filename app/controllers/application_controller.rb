@@ -67,7 +67,7 @@ class ApplicationController < ActionController::API
 
       response.headers['CURRENT-USER-DEFAULT-COLLECTION-ID'] = collections.first.id
       response.headers['CURRENT-USER-DEFAULT-WISH-LIST-ID']  = wish_lists.first.id
-      response.headers['CURRENT-USER-WISH-LISTS-ITEMS-IDS']  = wish_lists.joins(:items).select('items.id').uniq
-      response.headers['CURRENT-USER-COLLECTIONS-ITEMS-IDS'] = collections.joins(:items).select('items.id').uniq
+      response.headers['CURRENT-USER-WISH-LISTS-ITEMS-IDS']  = wish_lists.joins(:items).select('items.id').map(&:id).uniq
+      response.headers['CURRENT-USER-COLLECTIONS-ITEMS-IDS'] = collections.joins(:items).select('items.id').map(&:id).uniq
     end
 end

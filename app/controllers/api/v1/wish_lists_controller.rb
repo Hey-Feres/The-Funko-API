@@ -3,8 +3,9 @@
 module Api::V1
   class WishListsController < ApplicationController
     skip_before_action :set_index, only: %i[index]
+    skip_before_action :set_associated_items, only: %i[items]
     before_action :authenticate_user!
-    before_action :set_wish_list, only: %i[show update destroy]
+    before_action :set_wish_list, only: %i[show update destroy items]
 
     def index
       @wish_lists = current_user.wish_lists.paginate(page, length)
@@ -43,9 +44,28 @@ module Api::V1
       @wish_list.destroy
     end
 
+    def items
+      @items  = @wish_list.items.paginate(page, length)
+      @meta   = {
+        page: page,
+        length: length,
+        total: @wish_list.items.count,
+        total_pages: @wish_list.items.total_pages(length)
+      }
+
+      render json: @items, meta: @meta
+    end
+
+    def lite_items
+      @items = current_user.wish_lists.joins(:items).select('items.id')
+
+      render json: @items
+    end
+
     private
       def set_wish_list
-        @wish_list = WishList.find(params[:id])
+        id = params[:id] || params[:wish_list_id]
+        @wish_list = WishList.find(id)
       end
 
       def wish_list_params

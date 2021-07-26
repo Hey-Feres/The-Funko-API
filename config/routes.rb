@@ -25,8 +25,16 @@ Rails.application.routes.draw do
         get '/items', to: 'categories#items'
       end
 
-      resources :collections
-      resources :wish_lists
+      resources :collections do
+        get '/items', to: 'collections#items'
+      end
+
+      resources :wish_lists do
+        get '/items', to: 'wish_lists#items'
+      end
+
+      get '/collections_lite_items', to: 'collections#lite_items'
+      get '/wish_lists_lite_items', to: 'wish_lists#lite_items'
 
       post      :search, to: 'searches#index'
     end

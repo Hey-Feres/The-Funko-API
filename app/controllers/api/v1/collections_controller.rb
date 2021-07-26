@@ -3,8 +3,9 @@
 module Api::V1
   class CollectionsController < ApplicationController
     skip_before_action :set_index, only: %i[index]
+    skip_before_action :set_associated_items, only: %i[items]
     before_action :authenticate_user!
-    before_action :set_collection, only: %i[show update destroy]
+    before_action :set_collection, only: %i[show update destroy items]
 
     def index
       @collections = current_user.collections.paginate(page, length)
@@ -42,9 +43,28 @@ module Api::V1
       @collection.destroy
     end
 
+    def items
+      @items  = @collection.items.paginate(page, length)
+      @meta   = {
+        page: page,
+        length: length,
+        total: @collection.items.count,
+        total_pages: @collection.items.total_pages(length)
+      }
+
+      render json: @items, meta: @meta
+    end
+
+    def lite_items
+      @items = current_user.collections.joins(:items).select('items.id')
+
+      render json: @items
+    end
+
     private
       def set_collection
-        @collection = Collection.find(params[:id])
+        id = params[:id] || params[:collection_id]
+        @collection = Collection.find(id)
       end
 
       def collection_params

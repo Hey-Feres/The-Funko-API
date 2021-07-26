@@ -57,7 +57,7 @@ module Api::V1
     end
 
     def lite_items
-      @items = current_user.wish_lists.joins(:items).select('items.id')
+      @items = current_user.wish_lists.joins(:items).select('items.id').uniq
 
       render json: @items
     end

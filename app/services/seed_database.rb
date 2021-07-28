@@ -1,7 +1,7 @@
 class SeedDatabase
   def initialize
     @new_data_fetch    = GetFunkoItems.new.result
-    @last_data_fetched = DataFetch.last.data
+    @last_data_fetched = DataFetch.last&.data
     @seed_data = nil
   end
 

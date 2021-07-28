@@ -15,6 +15,8 @@ class Collection < ApplicationRecord
       return if items_ids.blank?
 
       items_ids.each do |id|
+        id = id.to_i
+
         item = Item.find(id)
         items << item if items.map(&:id).exclude?(id)
       end
@@ -24,8 +26,9 @@ class Collection < ApplicationRecord
       return if remove_items_ids.blank?
 
       remove_items_ids.uniq.each do |id|
-        item = Item.find(id)
+        id = id.to_i
 
+        item = Item.find(id)
         items.delete(item) if items.map(&:id).include?(id)
       end
     end

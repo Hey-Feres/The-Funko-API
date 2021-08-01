@@ -182,7 +182,7 @@ class SeedDatabase
 
     return if items.empty?
 
-    Item.import items, on_duplicate_key_update: %i[id]
+    Item.import items, on_duplicate_key_update: %i[slug]
   end
 
   def call

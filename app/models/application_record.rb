@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class ApplicationRecord < ActiveRecord::Base
+  include ApplicationHelper
+
   self.abstract_class = true
 
   MODELS_WITHOUT_SLUG = %w[WishList Collection DataFetch User]
@@ -18,6 +20,12 @@ class ApplicationRecord < ActiveRecord::Base
     def add_slug
       return unless should_add_slug?
 
-      self.slug = self.class == Item ? title.to_slug : name.to_slug
+      if self.class == Item
+        slug = "#{title.to_slug}_#{generate_slug_number}"
+        self.slug = slug
+      else
+        slug = "#{name.to_slug}_#{generate_slug_number}"
+        self.slug = slug
+      end
     end
 end

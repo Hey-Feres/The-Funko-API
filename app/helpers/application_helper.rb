@@ -14,4 +14,8 @@ module ApplicationHelper
 
     controller.remove('Controller').singularize.constantize
   end
+
+  def generate_slug_number
+    (0...10).map { ('0'..'9').to_a[rand(10)] }.join
+  end
 end

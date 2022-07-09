@@ -27,5 +27,5 @@ class Item < ApplicationRecord
   has_many :users_collections, through: :collections, source: :user
   has_many :users_wish_lists,  through: :wish_lists, source: :user
 
-  validates :title, :number, :slug, presence: true
+  validates :title, :number, presence: true
 end

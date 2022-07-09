@@ -8,7 +8,6 @@ class ApplicationRecord < ActiveRecord::Base
   MODELS_WITHOUT_SLUG = %w[WishList Collection DataFetch User]
 
   include Paginatable
-  include Searchable
 
   before_validation :add_slug
 

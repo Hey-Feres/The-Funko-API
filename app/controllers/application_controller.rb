@@ -34,16 +34,23 @@ class ApplicationController < ActionController::API
       search_by.present? && search_for.present?
     end
 
+    def query
+      return scope unless params[:query]
+
+      q = params[:query].split("=")
+      scope.ransack({ q[0].to_sym => q[1] }).result(distinct: true)
+    end
+
     def set_index
-      @scope = scope.order(created_at: :desc)
-      @scope = @scope.search(search_by, search_for) if should_apply_search?
-      @scope = @scope.paginate(page, length)
+      q = query
+
+      @scope = q.order(created_at: :desc).paginate(page, length) 
 
       @meta  = {
         page: page,
         length: length,
-        total: scope.count,
-        total_pages: scope.total_pages(length)
+        total: q.count,
+        total_pages: q.total_pages(length)
       }
     end
 

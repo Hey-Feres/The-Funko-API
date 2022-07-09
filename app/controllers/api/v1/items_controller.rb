@@ -5,6 +5,7 @@ module Api::V1
     before_action :set_item, only: %i[show]
 
     def index
+      byebug
       render json: @scope, meta: @meta
     end
 

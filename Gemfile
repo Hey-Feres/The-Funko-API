@@ -29,6 +29,8 @@ gem 'yajl-ruby', require: 'yajl'
 gem 'active_model_serializers'
 # Fast and efficient recommendations and predictions using Ruby & Redis
 gem 'predictor'
+# Ransack will help you easily add searching to your Rails application, without any additional dependencies.
+gem 'ransack'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
